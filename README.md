@@ -36,75 +36,10 @@ go mod tidy
 
 ### Uso
 
-#### Executar o programa principal
+Importe o package e utilize:
+1. A função  `ValidadorCNPJ(cnpj string)` para validar com retorno boleano
 
-1. Edite o arquivo main.go para incluir o CNPJ que deseja validar.
-2. Execute o programa:
-
-```shell
-go run main.go
-```
-
-Exemplo de saída:
-
-```shell
-CNPJ limpo:  28UV8YY9000174
-true
-```
-
-### Testes
-
-Para rodar os testes unitários, execute:
-
-```shell
-go test ./...
-```
-
-Exemplo de saída:
-
-```shell
-ok  	_/path/to/project	0.123s
-```
-
-### Exemplo de Código
-
-#### Validação de CNPJ
-
-```go
-cnpj := "28.UV8.YY9/0001-74"
-fmt.Println("CNPJ limpo: ", RemoveCaracteresFormatacao(cnpj))
-fmt.Println(IsValidCNPJ(cnpj))
-```
-
-#### Teste Unitário
-
-```go
-func TestIsCNPJ(t *testing.T) {
-	validate := validator.New(validator.WithRequiredStructEnabled())
-	validate.RegisterValidation("cnpj", ValidadorCNPJ)
-
-	tests := []struct {
-		name     string
-		document string
-		expected bool
-	}{
-		{"Valido CNPJ", "12345678000195", true},
-		{"Invalido CNPJ", "12345678900111", false},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			testStruct := TestStructCNPJ{Document: tt.document}
-			err := validate.Struct(testStruct)
-			if tt.expected {
-				assert.NoError(t, err)
-			} else {
-				assert.Error(t, err)
-			}
-		})
-	}
-}
-```
+2. A função `RemoveCaracteresFormatacao(cnpj string)` para tirar a mascara do cnpj
 
 ### Contribuição
 
