@@ -4,42 +4,79 @@ Este projeto é uma implementação em Go para validação de CNPJs Alfanuméric
 
 ### Funcionalidades
 
-- Remoção de formatação: Remove caracteres como pontos, barras e traços de um CNPJ.
-- Validação de CNPJ: Verifica se um CNPJ é válido, considerando sua formação e dígitos verificadores.
-- Cálculo de dígitos verificadores (DV): Calcula os dois dígitos verificadores de um CNPJ com base nos pesos definidos.
+- **Remoção de formatação**: remove caracteres como pontos, barras e traços de um CNPJ.
+- **Validação de CNPJ**: verifica se um CNPJ é válido, considerando sua formação e dígitos verificadores.
+- **Cálculo de dígitos verificadores (DV)**: calcula os dois dígitos verificadores de um CNPJ com base nos pesos definidos.
 
 ### Estrutura do Projeto
 
-- **main.go:** Contém a lógica principal para validação de CNPJs.
-- **main_test.go**: Inclui testes unitários para validar o comportamento das funções.
+- **validador.go:** Contém a lógica principal para validação de CNPJs.
+- **validador_test.go**: Inclui testes unitários para validar o comportamento das funções.
+
+```bash
+validador_cnpj_alfanumerico/
+├── go.mod
+├── go.sum
+├── .gitignore
+├── README.md
+├── LICENSE
+└── validador/
+    ├── validador.go
+    └── validador_test.go
+```
 
 ### Pré-requisitos
 
-- Go 1.18 ou superior.
+- Go 1.20 ou superior.
 - Biblioteca go-playground/validator para validações customizadas.
 - Biblioteca testify para testes unitários.
 
 ### Instalação
 
-1. Clone o repositório:
+1. Instale o package:
 
 ```shell
-git clone https://github.com/seu-usuario/validador-cnpj.git
-cd validador-cnpj
+go get github.com/Daniel60/validador_cnpj_alfanumerico
 ```
 
-2. Instale as dependências:
+2. Usar as dependências:
 
-```shell
-go mod tidy
+```go
+import (
+    "github.com/Daniel60/validador_cnpj_alfanumerico"
+    "github.com/go-playground/validator/v10"
+)
+
+type Empresa struct {
+    CNPJ string `validate:"cnpj"`
+}
+
+func main(){
+	// como usar o validador com tags nos structs
+	v10 := validator.New(validator.WithRequiredStructEnabled())
+	v10.RegisterValidation("cnpj", val.ValidadorCNPJ)
+
+    // struct
+    empresa := Empresa{CNPJ: "12.345.678/0001-95"}
+    err := v.Struct(empresa)
+
+	// como usar as funções do package
+	a := val.IsValidCNPJ("122334")
+	b := val.RemoveCaracteresFormatacao("asas_22")
+
+	println(a, b, empresa, err == nil)
+}
 ```
 
 ### Uso
 
 Importe o package e utilize:
-1. A função  `ValidadorCNPJ(cnpj string)` para validar com retorno boleano
 
-2. A função `RemoveCaracteresFormatacao(cnpj string)` para tirar a mascara do cnpj
+1. A função  `ValidadorCNPJ(fl validator.FieldLevel) bool` para validar com retorno boleano e é usado com a biblioteca de validaçao v10 ou o binding do gin gonic
+
+2. A função `RemoveCaracteresFormatacao(cnpj string) string` para tirar a mascara do cnpj e devolve string
+
+3. A função `IsValidCNPJ(cnpj string) bool` valida a string e devolver o boleano
 
 ### Contribuição
 

@@ -1,6 +1,6 @@
 module github.com/Daniel60/validador_cnpj_alfanumerico
 
-go 1.24.1
+go 1.20
 
 require (
 	github.com/go-playground/validator/v10 v10.26.0
@@ -21,4 +21,10 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-retract v1.0.0
+retract (
+	v1.0.4
+	v1.0.3
+	v1.0.2
+	v1.0.1
+	v1.0.0
+)
