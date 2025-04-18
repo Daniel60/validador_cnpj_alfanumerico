@@ -1,4 +1,4 @@
-package validador
+package validadorCNPJ
 
 import (
 	"testing"
@@ -13,7 +13,7 @@ type TestStructCNPJ struct {
 
 func TestIsCNPJ(t *testing.T) {
 	validate := validator.New(validator.WithRequiredStructEnabled())
-	validate.RegisterValidation("cnpj", ValidadorCNPJ)
+	validate.RegisterValidation("cnpj", ValidadorCNPJField)
 
 	tests := []struct {
 		name     string

@@ -1,4 +1,4 @@
-package validador
+package validadorCNPJ
 
 import (
 	"fmt"
@@ -22,8 +22,8 @@ var (
 	regexValorZerado          = regexp.MustCompile(`[0]+$`)
 )
 
-// ValidadorCNPJ is a custom validator function for validating CNPJ fields using the validator package.
-func ValidadorCNPJ(fl validator.FieldLevel) bool {
+// ValidadorCNPJField is a custom validator function for validating CNPJ fields using the validator package.
+func ValidadorCNPJField(fl validator.FieldLevel) bool {
 	cnpj := fl.Field().String()
 	return IsValidCNPJ(cnpj)
 }
