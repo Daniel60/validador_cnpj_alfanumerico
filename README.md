@@ -43,28 +43,30 @@ go get github.com/Daniel60/validador_cnpj_alfanumerico
 
 ```go
 import (
-	val "github.com/Daniel60/validador_cnpj_alfanumerico/ValidadorCNPJ"
-    "github.com/go-playground/validator/v10"
+	"fmt"
+
+	val "github.com/Daniel60/validador_cnpj_alfanumerico/validadorCNPJ"
+	"github.com/go-playground/validator/v10"
 )
 
 type Empresa struct {
-    CNPJ string `validate:"cnpj"`
+	CNPJ string `validate:"cnpj"`
 }
 
-func main(){
+func main() {
 	// como usar o validador com tags nos structs
 	v10 := validator.New(validator.WithRequiredStructEnabled())
 	v10.RegisterValidation("cnpj", val.ValidadorCNPJField)
 
-    // struct
-    empresa := Empresa{CNPJ: "12.345.678/0001-95"}
-    err := v.Struct(empresa)
+	// struct
+	empresa := Empresa{CNPJ: "12.345.678/0001-95"}
+	err := v10.Struct(empresa)
 
 	// como usar as funções do package
 	a := val.IsValidCNPJ("122334")
 	b := val.RemoveCaracteresFormatacao("asas_22")
 
-	println(a, b, empresa, err == nil)
+	fmt.Println(a, b, empresa, err == nil)
 }
 ```
 
